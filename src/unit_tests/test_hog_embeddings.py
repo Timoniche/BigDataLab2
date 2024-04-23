@@ -5,9 +5,9 @@ import unittest
 
 import numpy as np
 
-from logger import Logger
-
 sys.path.insert(1, os.path.join(os.getcwd(), "src"))
+
+from logger import Logger
 
 from images_dataset import hog_embedding  # noqa: E402
 
