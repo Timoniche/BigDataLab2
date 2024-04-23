@@ -43,9 +43,10 @@ options {
         stage('Building .env file for docker compose') {
             steps {
                 sh '''
-                    echo PG_USER=$DB_CREDS_USR > .env
-                    echo PG_PASSWORD=$DB_CREDS_PSW >> .env
-                    echo PG_DB=$PG_DB >> .env
+                    echo \"PG_USER=$DB_CREDS_USR\" > .env
+                    echo \"PG_PASSWORD=$DB_CREDS_PSW\" >> .env
+                    echo \"PG_DB=$PG_DB\" >> .env
+                    cat .env
                 '''
             }
         }
