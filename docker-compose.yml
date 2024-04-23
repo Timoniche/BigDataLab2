@@ -6,4 +6,4 @@ services:
     command: bash -c "python src/images_dataset.py && python src/img_with_name_dataloader.py && coverage run -a src/unit_tests/test_hog_embeddings.py && coverage report -m --ignore-errors"
     ports:
       - "8000:8000"
-    image: ddulaev/mle-template:latest
+    image: ddulaev/lab2:latest

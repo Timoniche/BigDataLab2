@@ -46,7 +46,7 @@ options {
         stage('Checkout coverage report') {
             steps{
                 dir("BigDataLab2") {
-                    sh 'docker compose logs -t --tail 10'
+                    sh 'docker compose logs -t --tail 50'
                 }
             }
         }
