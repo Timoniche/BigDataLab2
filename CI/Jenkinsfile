@@ -54,8 +54,10 @@ options {
 
         stage('Create and run docker container') {
             steps {
-                sh 'cat .env'
-                sh 'cd BigDataLab2 && docker compose up -d'
+                dir("BigDataLab2") {
+                    sh 'cat .env'
+                    sh 'docker compose up -d'
+                }
             }
         }
 
