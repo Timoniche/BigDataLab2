@@ -3,6 +3,8 @@ pipeline {
 
     environment {
         DOCKERHUB_CREDS=credentials('mle-template')
+        DB_CREDS=credentials('pgaas-lab2')
+        PG_DB    = "postgres"
         LC_ALL   = "en_US.UTF-8"
         LANG     = "en_US.UTF-8"
         LANGUAGE = "en_US.UTF-8"

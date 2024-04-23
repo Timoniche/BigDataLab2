@@ -3,6 +3,8 @@ pipeline {
 
     environment {
         DOCKERHUB_CREDS=credentials('mle-template')
+        DB_CREDS=credentials('pgaas-lab2')
+        PG_DB    = "postgres"
         LC_ALL   = "en_US.UTF-8"
         LANG     = "en_US.UTF-8"
         LANGUAGE = "en_US.UTF-8"
@@ -37,15 +39,27 @@ options {
                 sh 'cd BigDataLab2 && docker compose build'
             }
         }
+
+        stage('Building .env file for docker compose') {
+            steps {
+                sh '''
+                    echo PG_USER=$DB_CREDS_USR > .env
+                    echo PG_PASSWORD=$DB_CREDS_PSW >> .env
+                    echo PG_DB=$PG_DB >> .env
+                '''
+            }
+        }
+
         stage('Create and run docker container') {
             steps {
                 sh 'cd BigDataLab2 && docker compose up -d'
             }
         }
 
-        stage('Checkout coverage report') {
+        stage('Checkout coverage report, images') {
             steps{
                 dir("BigDataLab2") {
+                    sh 'docker compose images'
                     sh 'docker compose logs -t --tail 50'
                 }
             }
