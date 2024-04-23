@@ -42,17 +42,19 @@ options {
 
         stage('Building .env file for docker compose') {
             steps {
-                sh '''
-                    echo \"PG_USER=$DB_CREDS_USR\" > .env
-                    echo \"PG_PASSWORD=$DB_CREDS_PSW\" >> .env
-                    echo \"PG_DB=$PG_DB\" >> .env
-                    cat .env
-                '''
+                dir("BigDataLab2") {
+                    sh '''
+                        echo PG_USER=$DB_CREDS_USR > .env
+                        echo PG_PASSWORD=$DB_CREDS_PSW >> .env
+                        echo PG_DB=$PG_DB >> .env
+                    '''
+                }
             }
         }
 
         stage('Create and run docker container') {
             steps {
+                sh 'cat .env'
                 sh 'cd BigDataLab2 && docker compose up -d'
             }
         }
