@@ -2,6 +2,7 @@ import os
 from contextlib import closing
 
 import psycopg2
+from psycopg2 import extensions
 
 
 class Database:
@@ -21,9 +22,11 @@ class Database:
                     dbname=self.pg_dbname,
                     user=self.pg_user,
                     password=self.pg_password,
-                    host='localhost',
+                    host='localhost',  # todo: clarify f'jdbc:postgresql://db:5432/{pg_dbname}'
                 )
         ) as connection:
+            connection.set_isolation_level(extensions.ISOLATION_LEVEL_AUTOCOMMIT)
+
             with connection.cursor() as cursor:
                 if args is None:
                     cursor.execute(command)
