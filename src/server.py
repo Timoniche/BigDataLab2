@@ -8,11 +8,15 @@ from PIL import Image
 
 from fastapi import FastAPI, UploadFile, File
 
+from database import Database
 from images_dataset import IMAGE_SIZE, extract_hog_features
+from service import Service
 from utils.common_utils import cur_file_path
 
-app = FastAPI()
+db = Database()
+service = Service(db)
 
+app = FastAPI()
 
 pretrained_path = str(cur_file_path().parent.parent.parent) + '/data/random_forest_pretrained.pkl'
 with open(pretrained_path, 'rb') as f:
@@ -35,15 +39,23 @@ async def upload_file(file: UploadFile = File(...)):
 
     hog_embs = extract_hog_embs(image)
 
-    is_male = rf_classifier.predict([hog_embs])
+    is_male = rf_classifier.predict([hog_embs])  # e.g [1] or [0]
 
-    return {
+    response = {
         'filename': file.filename,
         'is_male': 'male' if is_male else 'female',
     }
 
+    service.save_image_prediction(
+        image_name=file.filename,
+        is_male=True if is_male else False,
+    )
+
+    return response
+
 
 def main():
+    service.init_db()
     uvicorn.run(
         'src.server:app',
         host='0.0.0.0',
