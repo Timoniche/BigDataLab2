@@ -18,7 +18,7 @@ class FunctionalApiTest:
     def test_upload_photo(self):
         images_dir = str(pathlib.Path(__file__).resolve().parent.parent.parent)
         print(images_dir)
-        img_path = images_dir + '/client_images/' + '000003.jpg'
+        img_path = images_dir + '/client_images/' + '000002.jpg'
 
         files = {
             'file': open(img_path, 'rb')
@@ -32,7 +32,7 @@ class FunctionalApiTest:
 
         assert response.status_code == 200
         self.log.info(f'Response json: {json}')
-        ground_truth = '{"filename":"000003.jpg","is_male":"male"}'
+        ground_truth = '{"filename":"000002.jpg","is_male":"female"}'
 
         assert json == ground_truth, f'Expected {ground_truth}, got {json}'
 

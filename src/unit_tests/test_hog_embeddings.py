@@ -7,7 +7,7 @@ import numpy as np
 
 sys.path.insert(1, os.path.join(os.getcwd(), "src"))
 
-from logger import Logger
+from logger import Logger  # noqa: E402
 
 from images_dataset import hog_embedding  # noqa: E402
 

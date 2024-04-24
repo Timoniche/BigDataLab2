@@ -1,17 +1,30 @@
 import io
+import os
 import pickle
+import sys
 
 import cv2
 import numpy as np
 import uvicorn
-from PIL import Image
 
-from fastapi import FastAPI, UploadFile, File
+src_module_path = os.path.join(os.getcwd(), "src")
+sys.path.insert(1, src_module_path)
 
-from database import Database
-from images_dataset import IMAGE_SIZE, extract_hog_features
-from service import Service
-from utils.common_utils import cur_file_path
+from logger import Logger  # noqa: E402
+
+logger = Logger(show=True)
+log = logger.get_logger(__name__)
+
+log.info(src_module_path)
+
+from PIL import Image  # noqa: E402
+
+from fastapi import FastAPI, UploadFile, File  # noqa: E402
+
+from database import Database  # noqa: E402
+from images_dataset import IMAGE_SIZE, extract_hog_features  # noqa: E402
+from service import Service  # noqa: E402
+from utils.common_utils import cur_file_path  # noqa: E402
 
 db = Database()
 service = Service(db)
