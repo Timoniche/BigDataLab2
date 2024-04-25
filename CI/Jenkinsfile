@@ -79,7 +79,10 @@ options {
 
     post {
         always {
-            sh 'docker logout'
+            dir("BigDataLab2") {
+                sh 'docker compose down'
+                sh 'docker logout'
+            }
         }
     }
 }
