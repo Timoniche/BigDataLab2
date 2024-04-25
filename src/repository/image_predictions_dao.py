@@ -31,3 +31,14 @@ class ImagePredictionsDAO:
             ''',
             args=(image_name, is_male)
         )
+
+    def select_image_predictions(
+            self,
+            image_name: str,
+    ):
+        return self.db.execute(
+            '''
+            SELECT is_male FROM image_predictions WHERE filename = %s
+            ''',
+            args=(image_name,)
+        )

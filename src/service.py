@@ -18,3 +18,11 @@ class Service:
             image_name=image_name,
             is_male=is_male,
         )
+
+    def get_image_male(
+            self,
+            image_name: str,
+    ):
+        return self.imagedao.select_image_predictions(
+            image_name=image_name,
+        )
