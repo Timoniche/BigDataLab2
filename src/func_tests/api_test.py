@@ -1,8 +1,13 @@
+import os
 import pathlib
+import sys
 
-from logger import Logger
-from server import app
-from fastapi.testclient import TestClient
+src_module_path = os.path.join(os.getcwd(), "src")
+sys.path.insert(1, src_module_path)
+
+from logger import Logger  # noqa: E402
+from server import app  # noqa: E402
+from fastapi.testclient import TestClient  # noqa: E402
 
 
 class FunctionalApiTest:
