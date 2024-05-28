@@ -52,11 +52,21 @@ options {
             }
         }
 
-        stage('Create and run docker container') {
+        stage('Create and run docker containers') {
             steps {
                 dir("BigDataLab2") {
                     sh 'cat .env'
                     sh 'docker compose up -d'
+                    sh 'sleep 10'
+                }
+            }
+        }
+
+        stage('Coverage run unit tests') {
+            steps {
+                dir("BigDataLab2") {
+                    sh 'docker compose exec web coverage run -a src/unit_tests/test_hog_embeddings.py'
+                    sh 'docker compose exec web coverage report -m --ignore-errors'
                 }
             }
         }

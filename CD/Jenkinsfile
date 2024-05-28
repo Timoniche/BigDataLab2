@@ -40,7 +40,7 @@ options {
 
         stage('Downloading docker-compose') {
             steps {
-                sh 'curl https://raw.githubusercontent.com/Timoniche/BigDataLab2/main/CD/docker-compose.yml -o docker-compose.yml'
+                sh 'curl https://raw.githubusercontent.com/Timoniche/BigDataLab2/main/docker-compose.yml -o docker-compose.yml'
                 sh 'ls'
             }
         }
@@ -48,6 +48,8 @@ options {
         stage('Running docker compose') {
             steps {
                 sh 'docker compose up -d'
+                sh 'sleep 10'
+                sh 'docker compose logs'
             }
         }
 
